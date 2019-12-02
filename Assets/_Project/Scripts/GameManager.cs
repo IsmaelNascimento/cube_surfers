@@ -54,11 +54,13 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
-    #region PRIVATE_METHODS
+    #region PUBLIC_METHODS
 
     [ContextMenu("StartGameplay")]
-    private void StartGameplay()
+    public void StartGameplay()
     {
+        m_PeopleModels.Shuffle();
+
         for (int i = 0; i < m_Enemys.Count; i++)
         {
             m_Enemys[i].SetPeople(m_PeopleModels[i]);
@@ -68,10 +70,6 @@ public class GameManager : MonoBehaviour
         IsGameplay = true;
     }
 
-    #endregion
-
-    #region PUBLIC_METHODS
-
     public void ResetGameplay()
     {
         for (int i = 0; i < m_Enemys.Count; i++)
@@ -79,11 +77,15 @@ public class GameManager : MonoBehaviour
             m_Enemys[i].Reset();
             m_Player.position = Vector3.zero;
         }
+
+        SetHighscore();
     }
 
     public void SetPoint()
     {
         m_PointsCurrent += Constants.INCREASE_POINT_COUNT;
+        UiManager.Instance.SetPoint(m_PointsCurrent);
+        print("POINT CURRENT:: " + m_PointsCurrent);
     }
 
     public void SetHighscore()
@@ -93,6 +95,7 @@ public class GameManager : MonoBehaviour
         if(m_PointsCurrent > highscore)
         {
             PlayerPrefs.SetInt(Constants.HIGHSCORE_PLAYERPREFS, m_PointsCurrent);
+            print("New highscore:: " + m_PointsCurrent);
         }
     }
 

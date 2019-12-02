@@ -40,7 +40,7 @@ public class PlayerControl : MonoBehaviour
     {
         Debug.Log("You lose for:: " + other.gameObject.GetComponent<Enemy>().GetPeopleModel().name);
         GameManager.Instance.IsGameplay = false;
-        //GameManager.Instance.ResetGameplay();
+        GameManager.Instance.ResetGameplay();
     }
 
 #endregion
