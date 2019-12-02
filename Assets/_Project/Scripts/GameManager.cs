@@ -22,6 +22,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Transform m_Player;
     [SerializeField] private List<Enemy> m_Enemys;
 
+    private int m_PointsCurrent;
+
+    public bool IsGameplay { get; set; }
+
     #endregion
 
     #region MONOBEHAVIOUR_METHODS
@@ -60,6 +64,8 @@ public class GameManager : MonoBehaviour
             m_Enemys[i].SetPeople(m_PeopleModels[i]);
             m_Enemys[i].SetSpeed();
         }
+
+        IsGameplay = true;
     }
 
     #endregion
@@ -72,6 +78,21 @@ public class GameManager : MonoBehaviour
         {
             m_Enemys[i].Reset();
             m_Player.position = Vector3.zero;
+        }
+    }
+
+    public void SetPoint()
+    {
+        m_PointsCurrent += Constants.INCREASE_POINT_COUNT;
+    }
+
+    public void SetHighscore()
+    {
+        int highscore = PlayerPrefs.GetInt(Constants.HIGHSCORE_PLAYERPREFS);
+
+        if(m_PointsCurrent > highscore)
+        {
+            PlayerPrefs.SetInt(Constants.HIGHSCORE_PLAYERPREFS, m_PointsCurrent);
         }
     }
 

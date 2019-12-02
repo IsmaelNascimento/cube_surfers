@@ -39,7 +39,8 @@ public class PlayerControl : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("You lose for:: " + other.gameObject.GetComponent<Enemy>().GetPeopleModel().name);
-        GameManager.Instance.ResetGameplay();
+        GameManager.Instance.IsGameplay = false;
+        //GameManager.Instance.ResetGameplay();
     }
 
 #endregion

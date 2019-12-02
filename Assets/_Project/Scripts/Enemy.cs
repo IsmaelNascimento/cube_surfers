@@ -38,6 +38,11 @@ public class Enemy : MonoBehaviour
     private void PoolSimpleSystem()
     {
         transform.position = m_PositionInitial;
+
+        if (GameManager.Instance.IsGameplay)
+        {
+            GameManager.Instance.SetPoint();
+        }
     }
 
     #endregion
