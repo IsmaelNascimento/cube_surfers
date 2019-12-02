@@ -1,6 +1,6 @@
 # cube_surfers
 
-For play the gameplay:
+For play the gameplay: https://github.com/IsmaelNascimento/cube_surfers/blob/develop/cube_surfers-v1.apk
 
 On PC:
 
@@ -29,6 +29,8 @@ Design Patterns:
 - Folder structure
 
 - Managers
+
+- Language code: English
 
 Contact for help:
 
