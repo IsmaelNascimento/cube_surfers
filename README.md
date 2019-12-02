@@ -22,6 +22,8 @@ System on game:
 
 - Scripable Object for enemys
 
+- Screenshot and share(Not complete)
+
 Design Patterns:
 
 - Singleton
