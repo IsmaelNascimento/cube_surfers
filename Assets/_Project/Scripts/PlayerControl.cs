@@ -41,6 +41,8 @@ public class PlayerControl : MonoBehaviour
         Debug.Log("You lose for:: " + other.gameObject.GetComponent<Enemy>().GetPeopleModel().name);
         GameManager.Instance.IsGameplay = false;
         GameManager.Instance.ResetGameplay();
+        UiManager.Instance.ActiveOneScreen(2);
+        GameManager.Instance.SetHighscore();
     }
 
 #endregion

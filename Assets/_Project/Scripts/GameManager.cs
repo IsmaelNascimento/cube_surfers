@@ -26,6 +26,15 @@ public class GameManager : MonoBehaviour
 
     public bool IsGameplay { get; set; }
 
+    [SerializeField] private bool m_Test;
+    public bool IsTest
+    {
+        get
+        {
+            return m_Test;
+        }
+    }
+
     #endregion
 
     #region MONOBEHAVIOUR_METHODS
@@ -40,7 +49,6 @@ public class GameManager : MonoBehaviour
         ApiManager.Instance.GetPeoples(peoples =>
         {
             m_PeopleModels = peoples;
-            StartGameplay();
         });
     }
 
@@ -59,12 +67,22 @@ public class GameManager : MonoBehaviour
     [ContextMenu("StartGameplay")]
     public void StartGameplay()
     {
+        m_PointsCurrent = 0;
+        UiManager.Instance.SetPoint(m_PointsCurrent);
+
         m_PeopleModels.Shuffle();
 
-        for (int i = 0; i < m_Enemys.Count; i++)
+        try
         {
-            m_Enemys[i].SetPeople(m_PeopleModels[i]);
-            m_Enemys[i].SetSpeed();
+            for (int i = 0; i < m_Enemys.Count; i++)
+            {
+                m_Enemys[i].SetPeople(m_PeopleModels[i]);
+                m_Enemys[i].SetSpeed();
+            }
+        }
+        catch
+        {
+            StartGameplay();
         }
 
         IsGameplay = true;
@@ -77,8 +95,6 @@ public class GameManager : MonoBehaviour
             m_Enemys[i].Reset();
             m_Player.position = Vector3.zero;
         }
-
-        SetHighscore();
     }
 
     public void SetPoint()
@@ -95,6 +111,7 @@ public class GameManager : MonoBehaviour
         if(m_PointsCurrent > highscore)
         {
             PlayerPrefs.SetInt(Constants.HIGHSCORE_PLAYERPREFS, m_PointsCurrent);
+            UiManager.Instance.SetHighscore(m_PointsCurrent);
             print("New highscore:: " + m_PointsCurrent);
         }
     }

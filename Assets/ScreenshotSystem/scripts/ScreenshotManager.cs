@@ -31,6 +31,11 @@ namespace IsmaelNascimento
 
         #region MONOBEHAVIOUR_METHODS
 
+        private void Awake()
+        {
+            instance = this;
+        }
+
         private void Start()
         {
             VerifyPermissionSaveScreenshot();
@@ -62,6 +67,23 @@ namespace IsmaelNascimento
             screenshotTexture2D = new Texture2D(Screen.width, Screen.height);
             screenshotTexture2D.LoadImage(screenshotFile);
             NatShare.SaveToCameraRoll(screenshotTexture2D);
+        }
+
+        public void OnButtonSaveScreenshotClicked(Action afterSave)
+        {
+            Debug.Log("OnButtonSaveScreenshotClicked");
+            if (!File.Exists(GetPathScreenshot()))
+            {
+                Debug.LogError("Screenshot not exist\nPath: " + GetPathScreenshot());
+                return;
+            }
+
+            Debug.Log("Screenshot\nPath: " + GetPathScreenshot());
+            byte[] screenshotFile = File.ReadAllBytes(GetPathScreenshot());
+            screenshotTexture2D = new Texture2D(Screen.width, Screen.height);
+            screenshotTexture2D.LoadImage(screenshotFile);
+            NatShare.SaveToCameraRoll(screenshotTexture2D);
+            afterSave?.Invoke();
         }
 
         public void OnButtonShareScreenshotClicked()
@@ -125,11 +147,11 @@ namespace IsmaelNascimento
 
         private IEnumerator ScreenshotSystem_Coroutine(Action afterScreenshot = null)
         {
-            gameObjectsForDisable.ForEach(gameObject => gameObject.SetActive(false));
+            gameObjectsForDisable.ForEach(go => go.SetActive(false));
             yield return new WaitForSeconds(.1f);
             ScreenCapture.CaptureScreenshot(NameScreenshot());
             yield return new WaitForSeconds(.1f);
-            gameObjectsForDisable.ForEach(gameObject => gameObject.SetActive(true));
+            gameObjectsForDisable.ForEach(go => go.SetActive(true));
             yield return new WaitForSeconds(.1f);
             afterScreenshot?.Invoke();
         }

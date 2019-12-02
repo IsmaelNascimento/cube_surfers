@@ -161,6 +161,7 @@ MonoBehaviour:
   - {fileID: 917704082}
   - {fileID: 1621104255}
   - {fileID: 542998231}
+  m_Test: 1
 --- !u!4 &13223860
 Transform:
   m_ObjectHideFlags: 0
@@ -1102,6 +1103,7 @@ MonoBehaviour:
   m_MenuGameButton: {fileID: 1298059473}
   m_HighscoreText: {fileID: 2132645001}
   m_PointsText: {fileID: 330343688}
+  signinSampleScript: {fileID: 13223861}
 --- !u!1001 &455951146
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3239,8 +3241,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 100
-  m_fontSizeBase: 100
+  m_fontSize: 150
+  m_fontSizeBase: 150
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

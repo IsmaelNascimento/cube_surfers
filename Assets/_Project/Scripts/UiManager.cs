@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using IsmaelNascimento;
+using SignInSample;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,6 +33,8 @@ public class UiManager : MonoBehaviour
     [Header("TEXTS")]
     [SerializeField] private TextMeshProUGUI m_HighscoreText;
     [SerializeField] private TextMeshProUGUI m_PointsText;
+    [Header("OTHERS")]
+    [SerializeField] private SigninSampleScript signinSampleScript;
 
     #endregion
 
@@ -44,7 +48,7 @@ public class UiManager : MonoBehaviour
     private void Start()
     {
         m_PlayGameButton.onClick.AddListener(OnButtonPlayGameClicked);
-        m_QuitGameButton.onClick.AddListener(OnButtonPlayGameClicked);
+        m_QuitGameButton.onClick.AddListener(OnButtonQuitGameClicked);
         m_RestartGameButton.onClick.AddListener(OnButtonRestartGameClicked);
         m_ShareGameButton.onClick.AddListener(OnButtonShareGameClicked);
         m_MenuGameButton.onClick.AddListener(OnButtonMenuGameClicked);
@@ -57,6 +61,15 @@ public class UiManager : MonoBehaviour
     private void OnButtonPlayGameClicked()
     {
         ChangeScreen(1);
+
+        if(GameManager.Instance.IsTest)
+        {
+            GameManager.Instance.StartGameplay();
+        }
+        else
+        {
+            signinSampleScript.OnSignIn();
+        }
     }
 
     private void OnButtonQuitGameClicked()
@@ -73,14 +86,14 @@ public class UiManager : MonoBehaviour
 
     private void OnButtonShareGameClicked()
     {
-        ScreenshotManager.Instance.OnButtonScreenshotClicked(ScreenshotManager.Instance.OnButtonShareScreenshotClicked);
+        StartCoroutine(OnButtonShareGameClicked_Coroutine());
     }
 
     private void OnButtonMenuGameClicked()
     {
         ChangeScreen(0);
-        m_HighscoreText.text = string.Empty;
-        m_PointsText.text = string.Empty;
+        m_HighscoreText.text = $"Highscore: {string.Empty}";
+        m_PointsText.text = $"Point: {string.Empty}";
     }
 
     #endregion
@@ -93,9 +106,30 @@ public class UiManager : MonoBehaviour
         m_Screens[screenForActive].SetActive(true);
     }
 
+    public void ActiveOneScreen(int screenForActive)
+    {
+        m_Screens[screenForActive].SetActive(true);
+    }
+
     public void SetPoint(int point)
     {
-        m_PointsText.text = point.ToString();
+        m_PointsText.text = $"Point: {point}";
+    }
+
+    public void SetHighscore(int highscore)
+    {
+        m_HighscoreText.text = $"Highscore: {highscore}";
+    }
+
+    #endregion
+
+    #region COROUTINES
+
+    private IEnumerator OnButtonShareGameClicked_Coroutine()
+    {
+        ScreenshotManager.Instance.OnButtonScreenshotAndSaveClicked();
+        yield return new WaitForSeconds(1f);
+        ScreenshotManager.Instance.OnButtonShareScreenshotClicked();
     }
 
     #endregion
