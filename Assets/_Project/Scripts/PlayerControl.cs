@@ -74,9 +74,11 @@ public class PlayerControl : MonoBehaviour
 
     private void InputForMobile()
     {
-        if (Input.touchCount == 1)
+        if (Input.touchCount == 1 && GameManager.Instance.IsGameplay)
         {
+            print("into 1");
             Vector2 diff = Input.GetTouch(0).position - m_StartingTouch;
+            print("into 2");
 
             diff = new Vector2(diff.x / Screen.width, diff.y / Screen.width);
 
@@ -105,11 +107,11 @@ public class PlayerControl : MonoBehaviour
                     }
                 }
             }
-        }
 
-        if (Input.GetTouch(0).phase == TouchPhase.Began)
-        {
-            m_StartingTouch = Input.GetTouch(0).position;
+            if (Input.GetTouch(0).phase == TouchPhase.Began && GameManager.Instance.IsGameplay)
+            {
+                m_StartingTouch = Input.GetTouch(0).position;
+            }
         }
     }
 

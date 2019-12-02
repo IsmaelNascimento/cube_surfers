@@ -35,6 +35,7 @@ public class UiManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI m_PointsText;
     [Header("OTHERS")]
     [SerializeField] private SigninSampleScript signinSampleScript;
+    [SerializeField] private GameObject saveScreenshotPanel;
 
     #endregion
 
@@ -129,7 +130,7 @@ public class UiManager : MonoBehaviour
     {
         ScreenshotManager.Instance.OnButtonScreenshotAndSaveClicked();
         yield return new WaitForSeconds(1f);
-        ScreenshotManager.Instance.OnButtonShareScreenshotClicked();
+        saveScreenshotPanel.SetActive(true);
     }
 
     #endregion

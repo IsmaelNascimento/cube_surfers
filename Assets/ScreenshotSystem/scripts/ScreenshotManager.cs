@@ -66,6 +66,10 @@ namespace IsmaelNascimento
             byte[] screenshotFile = File.ReadAllBytes(GetPathScreenshot());
             screenshotTexture2D = new Texture2D(Screen.width, Screen.height);
             screenshotTexture2D.LoadImage(screenshotFile);
+
+            if (screenshotTexture2D == null)
+                print("Screenshot is null for save camera roll");
+
             NatShare.SaveToCameraRoll(screenshotTexture2D);
         }
 
@@ -88,8 +92,12 @@ namespace IsmaelNascimento
 
         public void OnButtonShareScreenshotClicked()
         {
-            NatShare.Share(screenshotTexture2D);
             Debug.Log("OnButtonShareScreenshotClicked");
+
+            if (screenshotTexture2D == null)
+                print("screenshot is null");
+
+            NatShare.Share(screenshotTexture2D);
         }
 
         [ContextMenu("OnButtonScreenshotAndSaveClicked")]

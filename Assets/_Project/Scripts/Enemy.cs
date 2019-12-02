@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     private PeopleModel peopleModel;
 
     [SerializeField] private TextMeshProUGUI m_PlayerFakeNameText;
+    [SerializeField] private EnemyType m_EnemyType;
 
     #endregion
 
@@ -18,6 +19,7 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         m_PositionInitial = transform.position;
+        GetComponent<Renderer>().material = m_EnemyType.materialColor;
     }
 
     private void Update()

@@ -50,6 +50,10 @@ public class GameManager : MonoBehaviour
         {
             m_PeopleModels = peoples;
         });
+
+#if UNITY_EDITOR
+        m_Test = true;
+#endif
     }
 
     private void Update()
@@ -69,6 +73,7 @@ public class GameManager : MonoBehaviour
     {
         m_PointsCurrent = 0;
         UiManager.Instance.SetPoint(m_PointsCurrent);
+        UiManager.Instance.SetHighscore(PlayerPrefs.GetInt(Constants.HIGHSCORE_PLAYERPREFS));
 
         m_PeopleModels.Shuffle();
 
